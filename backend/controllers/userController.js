@@ -1,6 +1,8 @@
 const userModel = require("../models/userModel");
 const userServices = require("../services/userServices");
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
+const removedTokenModel = require("../models/tokenRemovedModel");
 
 module.exports.registerUser = async (req, res, next) => {
   const errors = validationResult(req);
@@ -47,9 +49,24 @@ module.exports.loginUser = async (req, res, next) => {
 
   const token = user.generateAuthToken();
 
+  res.cookie("token", token);
+
   res.status(200).json({ token, user });
 };
 
 module.exports.getUserProfileDetails = async (req, res, next) => {
   res.status(200).json(req.user);
+};
+
+module.exports.logoutUser = async (req, res, next) => {
+  res.clearCookie("token");
+
+  const token =
+    req.cookies?.token ||
+    (req.headers.authorization?.startsWith("Bearer ") &&
+      req.headers.authorization.split(" ")[1]);
+
+  await removedTokenModel.create({ token });
+
+  res.status(200).json({ message: "Logged Out" });
 };
