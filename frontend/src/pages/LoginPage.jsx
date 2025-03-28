@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
@@ -7,10 +6,10 @@ const LoginPage = () => {
       <form className="max-w-sm mx-auto">
         <div className="mb-5">
           <label
-            for="email"
+            htmlFor="email"
             className="block mb-2 text-2xl font-medium  text-gray-900"
           >
-            what's your email?
+            what is your email?
           </label>
           <input
             type="email"
@@ -22,7 +21,7 @@ const LoginPage = () => {
         </div>
         <div className="mb-5">
           <label
-            for="password"
+            htmlFor="password"
             className="block mb-2 text-2xl font-medium text-gray-900"
           >
             Your password
